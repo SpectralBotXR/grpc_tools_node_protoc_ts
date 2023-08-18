@@ -22,7 +22,7 @@ message GetBookListRequest {
 }
 
 message BookList {
-    repeated Book books = 1;
+    repeated Book booksList = 1;
 }
 
 service BookService {
