@@ -8,9 +8,9 @@ import {EnumFormatter} from "./partial/EnumFormatter";
 import {DependencyFilter} from "../DependencyFilter";
 import {TplEngine} from "../TplEngine";
 
-export namespace ProtoMsgTsdFormatter {
+export namespace ProtoMsgTsFormatter {
 
-    export interface IProtoMsgTsdModel {
+    export interface IProtoMsgModel {
         packageName: string;
         fileName: string;
         imports: string[];
@@ -19,7 +19,7 @@ export namespace ProtoMsgTsdFormatter {
         enums: EnumFormatter.IEnumModel[];
     }
 
-    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): IProtoMsgTsdModel {
+    export function format(descriptor: FileDescriptorProto, exportMap: ExportMap): IProtoMsgModel {
         const fileName = descriptor.getName();
         const packageName = descriptor.getPackage();
 
@@ -44,12 +44,11 @@ export namespace ProtoMsgTsdFormatter {
             }
         });
 
+        // Only if this contains a message called "DatabaseDoc"
         descriptor.getMessageTypeList().forEach((enumType) => {
             messages.push(MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
         });
-        descriptor.getExtensionList().forEach((extension) => {
-            extensions.push(ExtensionFormatter.format(fileName, exportMap, extension, ""));
-        });
+        // Only if this contains a message called "@Translation"
         descriptor.getEnumTypeList().forEach((enumType) => {
             enums.push(EnumFormatter.format(enumType, descriptor, ""));
         });

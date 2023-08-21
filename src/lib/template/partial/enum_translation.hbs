@@ -1,0 +1,9 @@
+// Documentation -- EnumIndex: {{{enumIndex}}} from {{{importName}}}
+
+import {{curlyLeft}} {{{enumName}}} {{curlyRight}} from './{{{importName}}}';
+
+export const {{{enumName}}}Translation: {id: {{{enumName}}}, name: string}[] = [
+{{#each translation}}
+    {{curlyLeft}} id: {{{@key}}}, name: {{{this}}} {{curlyRight}}, 
+{{/each}}
+]

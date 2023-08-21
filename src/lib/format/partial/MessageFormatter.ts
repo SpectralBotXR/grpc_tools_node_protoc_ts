@@ -265,7 +265,7 @@ export namespace MessageFormatter {
             }
         });
         descriptor.getEnumTypeList().forEach((enumType) => {
-            messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
+            messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, fileDescriptor, nextIndent));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
             const name = oneOfDecl.getName();

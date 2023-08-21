@@ -11,6 +11,7 @@ import {FileDescriptorProto} from "google-protobuf/google/protobuf/descriptor_pb
 
 import {ProtoMsgTsdFormatter} from "./lib/format/ProtoMsgTsdFormatter";
 import {ProtoSvcTsdFormatter} from "./lib/format/ProtoSvcTsdFormatter";
+import {ProtoMsgTsFormatter} from "./lib/format/ProtoMsgTsFormatter";
 import {TplEngine} from "./lib/TplEngine";
 
 Utility.withAllStdIn((inputBuff: Buffer) => {
@@ -41,6 +42,14 @@ Utility.withAllStdIn((inputBuff: Buffer) => {
             const msgModel = ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
             msgTsdFile.setContent(TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
+
+            // message part
+            const customMsgFileName = Utility.filePathFromProtoWithoutExtCustom(fileName);
+            const customTsFile = new CodeGeneratorResponse.File();
+            customTsFile.setName(customMsgFileName + ".ts");
+            const customMsgModel = ProtoMsgTsFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            customTsFile.setContent(TplEngine.render("msg_ts", customMsgModel));
+            codeGenResponse.addFile(customTsFile);
 
             // service part
             const fileDescriptorModel = ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap, isGrpcJs);

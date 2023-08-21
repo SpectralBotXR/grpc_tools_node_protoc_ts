@@ -53,6 +53,10 @@ export namespace Utility {
         return protoFilePath.replace(".proto", "_pb");
     }
 
+    export function filePathFromProtoWithoutExtCustom(protoFilePath: string): string {
+        return protoFilePath.replace(".proto", "_model");
+    }
+
     export function svcFilePathFromProtoWithoutExt(protoFilePath: string): string {
         return protoFilePath.replace(".proto", "_grpc_pb");
     }

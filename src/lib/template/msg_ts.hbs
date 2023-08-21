@@ -7,18 +7,10 @@
 * Copyright 2023, SpectralBot BV <info@spectralbot.com>
 */
 
+
 /* tslint:disable */
 /* eslint-disable */
 
-{{#each imports}}
-{{{this}}}
-{{/each}}
-{{#each messages}}
-{{{render 'partial/message' this}}}
-{{/each}}
-{{#each extensions}}
-{{{render 'partial/extension' this}}}
-{{/each}}
 {{#each enums}}
-{{{render 'partial/enum' this}}}
+{{{render 'partial/enum_translation' this}}}
 {{/each}}
