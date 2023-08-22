@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProtoMsgTsdFormatter = void 0;
+exports.ProtoMsgTsFormatter = void 0;
 const Utility_1 = require("../Utility");
 const WellKnown_1 = require("../WellKnown");
 const MessageFormatter_1 = require("./partial/MessageFormatter");
-const ExtensionFormatter_1 = require("./partial/ExtensionFormatter");
 const EnumFormatter_1 = require("./partial/EnumFormatter");
 const DependencyFilter_1 = require("../DependencyFilter");
 const TplEngine_1 = require("../TplEngine");
-var ProtoMsgTsdFormatter;
-(function (ProtoMsgTsdFormatter) {
+var ProtoMsgTsFormatter;
+(function (ProtoMsgTsFormatter) {
     function format(descriptor, exportMap) {
         const fileName = descriptor.getName();
         const packageName = descriptor.getPackage();
@@ -32,12 +31,11 @@ var ProtoMsgTsdFormatter;
                 imports.push(`import * as ${pseudoNamespace} from "${upToRoot}${filePath}";`);
             }
         });
+        // Only if this contains a message called "DatabaseDoc"
         descriptor.getMessageTypeList().forEach((enumType) => {
             messages.push(MessageFormatter_1.MessageFormatter.format(fileName, exportMap, enumType, "", descriptor));
         });
-        descriptor.getExtensionList().forEach((extension) => {
-            extensions.push(ExtensionFormatter_1.ExtensionFormatter.format(fileName, exportMap, extension, ""));
-        });
+        // Only if this contains a message called "@Translation"
         descriptor.getEnumTypeList().forEach((enumType) => {
             enums.push(EnumFormatter_1.EnumFormatter.format(enumType, descriptor, ""));
         });
@@ -53,6 +51,6 @@ var ProtoMsgTsdFormatter;
             enums,
         };
     }
-    ProtoMsgTsdFormatter.format = format;
-})(ProtoMsgTsdFormatter = exports.ProtoMsgTsdFormatter || (exports.ProtoMsgTsdFormatter = {}));
-//# sourceMappingURL=ProtoMsgTsdFormatter.js.map
+    ProtoMsgTsFormatter.format = format;
+})(ProtoMsgTsFormatter = exports.ProtoMsgTsFormatter || (exports.ProtoMsgTsFormatter = {}));
+//# sourceMappingURL=ProtoMsgTsFormatter.js.map

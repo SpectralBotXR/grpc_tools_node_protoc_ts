@@ -11,6 +11,7 @@ const Utility_1 = require("./lib/Utility");
 const plugin_pb_1 = require("google-protobuf/google/protobuf/compiler/plugin_pb");
 const ProtoMsgTsdFormatter_1 = require("./lib/format/ProtoMsgTsdFormatter");
 const ProtoSvcTsdFormatter_1 = require("./lib/format/ProtoSvcTsdFormatter");
+const ProtoMsgTsFormatter_1 = require("./lib/format/ProtoMsgTsFormatter");
 const TplEngine_1 = require("./lib/TplEngine");
 Utility_1.Utility.withAllStdIn((inputBuff) => {
     try {
@@ -34,6 +35,13 @@ Utility_1.Utility.withAllStdIn((inputBuff) => {
             const msgModel = ProtoMsgTsdFormatter_1.ProtoMsgTsdFormatter.format(fileNameToDescriptor[fileName], exportMap);
             msgTsdFile.setContent(TplEngine_1.TplEngine.render("msg_tsd", msgModel));
             codeGenResponse.addFile(msgTsdFile);
+            // message part
+            const customMsgFileName = Utility_1.Utility.filePathFromProtoWithoutExtCustom(fileName);
+            const customTsFile = new plugin_pb_1.CodeGeneratorResponse.File();
+            customTsFile.setName(customMsgFileName + ".ts");
+            const customMsgModel = ProtoMsgTsFormatter_1.ProtoMsgTsFormatter.format(fileNameToDescriptor[fileName], exportMap);
+            customTsFile.setContent(TplEngine_1.TplEngine.render("msg_ts", customMsgModel));
+            codeGenResponse.addFile(customTsFile);
             // service part
             const fileDescriptorModel = ProtoSvcTsdFormatter_1.ProtoSvcTsdFormatter.format(fileNameToDescriptor[fileName], exportMap, isGrpcJs);
             if (fileDescriptorModel != null) {

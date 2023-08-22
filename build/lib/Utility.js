@@ -52,6 +52,10 @@ var Utility;
         return protoFilePath.replace(".proto", "_pb");
     }
     Utility.filePathFromProtoWithoutExt = filePathFromProtoWithoutExt;
+    function filePathFromProtoWithoutExtCustom(protoFilePath) {
+        return protoFilePath.replace(".proto", "_model");
+    }
+    Utility.filePathFromProtoWithoutExtCustom = filePathFromProtoWithoutExtCustom;
     function svcFilePathFromProtoWithoutExt(protoFilePath) {
         return protoFilePath.replace(".proto", "_grpc_pb");
     }
